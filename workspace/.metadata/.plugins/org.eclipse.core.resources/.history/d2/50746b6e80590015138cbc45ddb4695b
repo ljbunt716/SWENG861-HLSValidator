@@ -1,0 +1,89 @@
+package hlsfiles;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import common.CommonFile;
+
+public class HLSFile {
+	public URL Url;
+	public StringBuilder HLSText;
+	public String FileName;
+	public String FileExtension;
+	public List<String> LowerLevelFiles;
+
+	public HLSFile() {
+		HLSText = new StringBuilder();
+		LowerLevelFiles = new ArrayList<String>();
+	}
+
+	public HLSFile(URL url) {
+		Url = url;
+		FileName = CommonFile.GetFileName(Url.toString());
+		FileExtension = CommonFile.GetFileExtension(Url.toString());
+		HLSText = GetHLSText(url);
+		LowerLevelFiles = GetLowerLevelFiles(url);
+		
+		System.out.println(LowerLevelFiles.size());
+	}
+
+	private StringBuilder GetHLSText(URL url) {
+		StringBuilder hlsText = new StringBuilder();
+
+		Scanner scanner = null;
+
+		try {
+			// Get the text from the file with provided URL
+			scanner = new Scanner(url.openStream());
+
+			// While there is something to get in file, append it to HLSText
+			while (scanner.hasNextLine()) {
+				hlsText.append(scanner.nextLine());
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (scanner != null)
+				scanner.close();
+		}
+
+		return hlsText;
+	}
+
+	private List<String> GetLowerLevelFiles(URL url) {
+		List<String> lowerLevelFiles = new ArrayList<String>();
+		Scanner scanner = null;
+		String nextLine = "";
+
+		try {
+			// Get the text from the file with provided URL
+			scanner = new Scanner(url.openStream());
+
+			// While there is something to get in file, append it to HLSText
+			while (scanner.hasNextLine()) {
+				nextLine = scanner.nextLine();
+				if (IsLowerLevelFile(nextLine))
+					lowerLevelFiles.add(nextLine);
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (scanner != null)
+				scanner.close();
+		}
+		
+		return lowerLevelFiles;
+	}
+
+	private Boolean IsLowerLevelFile(String nextLine) {
+		return !nextLine.startsWith("#") && nextLine.contains(".m3u8");
+	}
+
+}

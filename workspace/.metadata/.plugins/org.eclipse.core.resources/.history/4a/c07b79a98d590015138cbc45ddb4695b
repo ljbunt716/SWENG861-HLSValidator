@@ -1,0 +1,17 @@
+package validators;
+
+import hlsfiles.HLSFile;
+
+//Validates the number of files in Directory = Number of Files listed in File
+public class FileAmountValidator extends Validator {
+
+	public FileAmountValidator(HLSFile file) {
+		File = file;
+	}
+
+	public Boolean IsValid() {
+		AddValidationError("Sample error message", "File Amount Validation");
+		return false;
+	}
+
+}

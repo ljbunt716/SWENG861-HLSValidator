@@ -1,0 +1,5 @@
+package validators.EXTXMEDIASEQUENCE;
+
+public class FileHasEXTXMEDIASEQUENCEAsUpper {
+
+}

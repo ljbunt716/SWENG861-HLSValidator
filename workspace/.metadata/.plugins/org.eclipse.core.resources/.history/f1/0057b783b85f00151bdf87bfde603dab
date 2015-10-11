@@ -1,0 +1,18 @@
+package validators.EXTINF;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.CaseValidator;
+import validators.Validator;
+
+public class FileHasEXTINFAsUpperValidator extends Validator {
+
+	public FileHasEXTINFAsUpperValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		if (!CaseValidator.IsValidCase(File.HLSText, "#EXTINF"))
+			super.AddValidationError("All mentions of EXTINF in file are not Uppercase : ",
+					"File Has EXTINF all Uppercase Validation");
+	}
+}

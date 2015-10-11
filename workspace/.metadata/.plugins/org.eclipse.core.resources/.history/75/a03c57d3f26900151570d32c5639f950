@@ -1,0 +1,5 @@
+package validators.MediaURI;
+
+public class MediaURIValidator {
+
+}

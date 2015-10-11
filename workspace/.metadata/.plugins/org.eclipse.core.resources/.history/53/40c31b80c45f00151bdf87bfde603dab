@@ -1,0 +1,34 @@
+package validators.ChildFile;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+import validators.EXTINF.EXTINFValidator;
+
+public class ChildFileValidator extends Validator {
+
+	public ChildFileValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+
+		// Step 1 - Validate file has ONLY 1 version #
+		ValidateEXTXVERSION();
+
+		// Step 1 - Validate EXTINF
+		ValidateEXTINF();
+	}
+
+	// #region - Validators
+
+	private void ValidateEXTXVERSION() {
+
+	}
+
+	private void ValidateEXTINF() {
+		EXTINFValidator extinf = new EXTINFValidator(File);
+		extinf.Validate();
+	}
+
+	// #endregion
+}

@@ -1,0 +1,17 @@
+
+public class HLSUrl {
+	String Url;
+	String HLStext;
+	
+	
+	public HLSUrl(){}
+	
+	public void GetHLSText()
+	{
+		
+		
+	}
+	
+	}
+
+

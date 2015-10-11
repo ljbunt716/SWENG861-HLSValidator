@@ -1,0 +1,33 @@
+package validators.EXTXSTREAMINF;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+import validators.EXTXSTREAMINF.Bandwidth.FileContainsBandwidth;
+
+public class EXTXSTREAMINFValidator extends Validator {
+
+	public EXTXSTREAMINFValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+
+		// Step 1 - Validate EXT-X-STREAM-INF line exists
+		ValidateEXTXSTREAMINFExists();
+
+		// Step 2 - Validate EXT-X-STREAM-INF line contains bandwidth
+		ValidateBandwidthExists();
+
+	}
+
+	private void ValidateEXTXSTREAMINFExists() {
+		FileContainsEXTXSTREAMINFValidator fileContainsEXTXSTREAMINF = new FileContainsEXTXSTREAMINFValidator(File);
+		fileContainsEXTXSTREAMINF.Validate();
+	}
+
+	private void ValidateBandwidthExists() {
+		FileContainsBandwidth fileContainsBandwidth = new FileContainsBandwidth(File);
+		fileContainsBandwidth.Validate();
+	}
+
+}

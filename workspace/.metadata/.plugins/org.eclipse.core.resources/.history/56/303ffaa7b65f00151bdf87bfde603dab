@@ -1,0 +1,5 @@
+package validators.EXTINF;
+
+public class ValidateEXTINFValue {
+
+}

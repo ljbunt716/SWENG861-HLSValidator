@@ -1,0 +1,16 @@
+1442767381203	Rename type 'ValidateEXTINFValue'
+1442768179407	Move compilation unit
+1442768894359	Rename type 'CommonDecimal'
+1442769452572	Rename type 'FileContainsEXTINF'
+1442769634169	Rename type 'ValidateEXTINFHasTagValidator'
+1442771739215	Delete element
+1442772558215	Rename package 'validators.EXTVersion'
+1442773351222	Rename type 'FileContainsOneEXTXVERSIONTag'
+1442773559853	Rename method 'GetVersionNumbers'
+1442777901808	Move compilation unit
+1442777971028	Rename package 'validators.EXTTargetDuration'
+1442782388994	Rename type 'FileHasEXTXMEDIASEQUENCEAsUpper'
+1442962845169	Delete element
+1442963288526	Move compilation unit
+1442963372563	Move compilation unit
+1443283003511	Rename local variable 'infValue'

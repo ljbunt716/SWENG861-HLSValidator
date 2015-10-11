@@ -1,0 +1,29 @@
+package validators.MediaURI;
+
+import java.util.Arrays;
+import java.util.List;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+//The EXT-X-MEDIA-SEQUENCE tag value MUST be incremented by 1 for every media URI that is removed from the playlist file. 
+//Media URIs must be removed from the playlist file in the order that they appear in the playlist. 
+//The updated index file presents a moving window into a continuous stream. This type of session is suitable for continuous broadcasts.
+public class MediaURIOrderValidator extends Validator {
+
+	public MediaURIOrderValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		List<String> allLinesInFile = Arrays.asList(File.HLSText.split("\\n"));
+		for (String line : allLinesInFile) {
+			if (!line.startsWith("#")) {
+				String mediaURIVal = line.substring(0, line.lastIndexOf('.')).substring(line.lastIndexOf('_'));
+				System.out.println(mediaURIVal);
+			}
+		}
+
+	}
+
+}

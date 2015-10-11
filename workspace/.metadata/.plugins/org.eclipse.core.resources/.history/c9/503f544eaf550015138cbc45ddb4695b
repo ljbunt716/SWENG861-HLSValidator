@@ -1,0 +1,55 @@
+package validators;
+
+import java.util.List;
+
+import hlsfiles.HLSFile;
+
+public class Validator {
+	public HLSFile File;
+	public List<Error> Errors;
+	public Boolean IsValidFile;
+
+	public Validator() {
+		IsValidFile = false;
+		Errors = new List<Error>();
+	}
+
+	public Boolean IsValid() {
+		return false;
+	}
+
+	public void ValidateFile() {
+
+		// Step 1 - Check File Type
+		if (IsFileTypeValid()) {
+			// Step 2 - Check File Size
+			if (IsFileSizeValid()) {
+				IsValidFile = true; // this will go in final Valid check
+			}
+		}
+
+		// If this code is reached, something failed
+		if (!IsValidFile) {
+			for (Error error : Errors) {
+				System.out.println("Fail Area: " + error.FailArea);
+				System.out.println("Fail Message: " + error.FailMessage);
+			}
+
+		}
+	}
+
+	private Boolean IsFileTypeValid() {
+		FileTypeValidator fileTypeValidator = new FileTypeValidator();
+		return fileTypeValidator.IsValid();
+	}
+
+	private Boolean IsFileSizeValid() {
+		SizeValidator sizeValidator = new SizeValidator();
+		return sizeValidator.IsValid();
+	}
+
+	public void SetError(String message, String area) {
+		Errors.add(new Error(message, area));
+	}
+
+}

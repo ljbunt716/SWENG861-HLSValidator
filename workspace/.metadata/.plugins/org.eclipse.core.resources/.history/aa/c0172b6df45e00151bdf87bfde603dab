@@ -1,0 +1,9 @@
+package hlsfiles;
+
+public class HLSFileType {
+
+	public enum Type {
+		File, URL
+	}
+
+}

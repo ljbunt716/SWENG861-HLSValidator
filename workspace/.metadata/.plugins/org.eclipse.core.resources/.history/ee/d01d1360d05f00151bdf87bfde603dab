@@ -1,0 +1,5 @@
+package validators.EXTXTargetDuration;
+
+public class FileHasEXTXDurationAsUpperValidator {
+
+}

@@ -1,0 +1,5 @@
+package validators.EXTTargetDuration;
+
+public class EXTTargetDurationValidator {
+
+}

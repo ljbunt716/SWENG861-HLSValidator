@@ -1,0 +1,5 @@
+Error Number	Error Type	File Name	Details of Error	Line Number	
+1	File Missing Validation	ipadipad-low.m3u8	File is missing from Directory: ipadipad-low_06807.ts	
+2	Invalid #EXTINF Value Validation	ipadipad-low.m3u8	#EXTINF: has invalid Value - 6, Version Number >= 3 so value must be floating point.	15	
+3	Invalid #EXT-X-TARGETDURATION Value Validation	ipadipad-low.m3u8	File has #EXT-X-TARGETDURATION Value is not a valid Integer - #EXT-X-TARGETDURATION = 6.0	3	
+4	Media URI not incremented by 1	ipadipad-low.m3u8	Media URI values are not incremented by 1: Previous Value - 6804 New Value - 6807	16	

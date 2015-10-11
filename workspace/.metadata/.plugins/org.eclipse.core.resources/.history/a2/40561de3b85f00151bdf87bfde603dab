@@ -1,0 +1,43 @@
+package validators.EXTINF;
+
+import java.util.Arrays;
+import java.util.List;
+
+import common.CommonInteger;
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class ValidateEXTINFValueValidator extends Validator {
+
+	public ValidateEXTINFValueValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		int lineNumber = 0;
+
+		try {
+			List<String> allLinesInFile = Arrays.asList(File.HLSText.split("\\n"));
+
+			for (String line : allLinesInFile) {
+				lineNumber++;
+				if (line.startsWith("#EXTINF")) {
+					String value = line.substring(line.indexOf("#EXTINF:") + 8, line.indexOf(","));// +8
+																									// to
+																									// remove
+																									// #EXTINF:
+					if (!CommonInteger.tryParse(value))
+						AddErrorMessage(lineNumber);
+
+				}
+			}
+		} catch (Exception e) {
+			super.AddValidationError("#EXTINF: has invalid value: ", "Invalid #EXTINF value Validation");
+		}
+	}
+
+	private void AddErrorMessage(int lineNumber) {
+		super.AddValidationError("#EXTINF: line number - " + lineNumber + " has invalid value.",
+				"Invalid #EXTINF Value Validation");
+	}
+}

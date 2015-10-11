@@ -1,0 +1,28 @@
+package validators;
+
+import hlsfiles.HLSDirectory;
+import hlsfiles.HLSFileWDirectory;
+
+public class FileTypeValidator extends Validator {
+
+	public FileTypeValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public Boolean IsValid() {
+		Boolean isAcceptableFileExt = false;
+
+		try {
+			isAcceptableFileExt = (File.FileExtension.equals("m3u8") || File.FileExtension.equals("ts"));
+
+			if (!isAcceptableFileExt)
+				AddValidationError("File Extension is Incorrect for File: " + File.FileBaseName,
+						"File Type Validation");
+		} catch (Exception e) {
+			AddValidationError("File Extension is Incorrect for File: " + File.FileBaseName, "File Type Validation");
+			isAcceptableFileExt = false;
+		}
+
+		return isAcceptableFileExt;
+	}
+}

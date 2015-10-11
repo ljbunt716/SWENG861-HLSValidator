@@ -1,0 +1,16 @@
+package validators;
+
+import hlsfiles.HLSFile;
+
+public class SizeValidator extends Validator {
+
+	public SizeValidator(HLSFile file) {
+		File = file;
+	}
+
+	public Boolean IsValid() {
+		AddValidationError("Sample error message", "Size Validation");
+		return false;
+	}
+
+}

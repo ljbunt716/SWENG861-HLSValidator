@@ -1,0 +1,31 @@
+import java.io.IOException;
+import java.net.URL;
+import java.util.Scanner;
+
+public class HLSFile {
+	URL Url;
+	StringBuilder HLSText;
+
+	public HLSFile() {
+		HLSText = new StringBuilder();
+	}
+
+	public void GetHLSText() {
+		try {
+			//Get the text from the file with provided URL
+			Scanner s = new Scanner(Url.openStream());
+
+			//While there is something to get in file, append it to HLSText
+			while (s.hasNextLine()) {
+				this.HLSText.append(s.nextLine());
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// System.out.println(fileStuff);
+
+	}
+
+}

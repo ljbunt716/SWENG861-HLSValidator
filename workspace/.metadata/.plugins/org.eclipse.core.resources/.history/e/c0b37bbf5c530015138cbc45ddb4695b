@@ -1,0 +1,8 @@
+package validators;
+
+public class FileTypeValidator extends Validator {
+
+	public Boolean IsValid() {
+		return false;
+	}
+}

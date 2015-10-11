@@ -1,0 +1,52 @@
+package validators;
+
+import hlsfiles.HLSFile;
+
+public class Validator {
+	public HLSFile File;
+	public String FailMessage;
+	public String FailArea;
+
+	public Validator() {
+		FailMessage = "";
+		FailArea = "";
+	}
+
+	public Boolean IsValid() {
+		return false;
+	}
+	
+	public void SetFailArea(String failArea)
+	{
+		this.FailArea = failArea;
+	}
+	
+	public void SetFailMessage(String failMessage)
+	{
+		this.FailMessage = failMessage;
+	}
+
+	public void ValidateFile() {
+		// Step 1 - Check File Type
+		if (IsFileTypeValid()) {
+			// Step 2 - Check File Size
+			if (IsFileSizeValid()) {
+
+			}
+		}
+		
+		//If this code is reached, something failed
+		System.out.println(FailMessage);
+	}
+
+	private Boolean IsFileTypeValid() {
+		FileTypeValidator fileTypeValidator = new FileTypeValidator();
+		return fileTypeValidator.IsValid();
+	}
+
+	private Boolean IsFileSizeValid() {
+		SizeValidator sizeValidator = new SizeValidator();
+		return sizeValidator.IsValid();
+	}
+
+}

@@ -1,0 +1,4 @@
+Error Number	Error Type	File Name	Details of Error	Line Number	
+1	#EXTINF Value Greater than #EXT-X-TARGETDURATION Validation	ipadipad-med.m3u8	#EXT-X-TARGETDURATION value must be greater than or equal to #EXTINF value -  #EXT-X-TARGETDURATION = 6, #EXTINF = 12	
+2	Invalid closing tag.	ipadipad-med.m3u8	File does not end with #EXT-X-ENDLIST tag.	17	
+3	File Has Invalid #EXT-X-ENDLIST Tag	ipadipad-med.m3u8	Tag #EXT-X-ENDLIST in file is not in correct format: #EXT-X-ENDLISTX	17	

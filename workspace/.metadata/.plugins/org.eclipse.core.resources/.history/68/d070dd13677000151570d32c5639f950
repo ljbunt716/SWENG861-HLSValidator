@@ -1,0 +1,16 @@
+package validators.EXTXENDLIST;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class EXTXENDLISTEndsWithValidator extends Validator {
+
+	public EXTXENDLISTEndsWithValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		
+
+	}
+}

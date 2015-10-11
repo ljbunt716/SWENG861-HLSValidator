@@ -1,0 +1,14 @@
+package common;
+
+public class CommonDecimal {
+	
+	public static Boolean tryParse(String value) {
+		try {
+		decimal.
+			D.parseInt(value);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+}

@@ -1,0 +1,16 @@
+package validators.EXTXVERSION;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class FileContainsValidVersionNumberValidator extends Validator {
+
+	public FileContainsValidVersionNumberValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+
+	}
+
+}

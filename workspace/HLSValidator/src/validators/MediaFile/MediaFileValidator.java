@@ -1,0 +1,73 @@
+package validators.MediaFile;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+import validators.EXTINF.EXTINFValidator;
+import validators.EXTXENDLIST.EXTXENDLISTValidators;
+import validators.EXTXMEDIASEQUENCE.EXTXMEDIASEQUENCEValidator;
+import validators.EXTXTargetDuration.EXTTargetDurationValidator;
+import validators.EXTXVERSION.EXTXVERSIONValidator;
+import validators.MediaURI.MediaURIValidator;
+
+//Do validations on items only pertaining to Media Files
+public class MediaFileValidator extends Validator {
+
+	public MediaFileValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+
+		// Step 1 - Validate EXT-X-VERSION tag
+		ValidateEXTXVERSION();
+
+		// Step 2 - Validate #EXTINF tag
+		ValidateEXTINF();
+
+		// Step 3 - Validate #EXT-X-TARGETDURATION tag
+		ValidateEXTXTargetDuration();
+
+		// Step 4 - Validate #EXT-X-MEDIA-SEQUENCE tag
+		ValidateEXTXMediaSequence();
+
+		// Step 5 - Validate #EXT-X-ENDLIST tag
+		ValidateEXTXENDLIST();
+
+		// Step 6 - Validate MediaURI
+		ValidateMediaURI();
+
+	}
+
+	// #region - Validators
+
+	private void ValidateEXTXVERSION() {
+		EXTXVERSIONValidator extxVersion = new EXTXVERSIONValidator(File);
+		extxVersion.Validate();
+	}
+
+	private void ValidateEXTINF() {
+		EXTINFValidator extinf = new EXTINFValidator(File);
+		extinf.Validate();
+	}
+
+	private void ValidateEXTXTargetDuration() {
+		EXTTargetDurationValidator extxTargetDuration = new EXTTargetDurationValidator(File);
+		extxTargetDuration.Validate();
+	}
+
+	private void ValidateEXTXMediaSequence() {
+		EXTXMEDIASEQUENCEValidator mediaSequence = new EXTXMEDIASEQUENCEValidator(File);
+		mediaSequence.Validate();
+	}
+
+	private void ValidateEXTXENDLIST() {
+		EXTXENDLISTValidators extEndList = new EXTXENDLISTValidators(File);
+		extEndList.Validate();
+	}
+
+	private void ValidateMediaURI() {
+		MediaURIValidator mediaURI = new MediaURIValidator(File);
+		mediaURI.Validate();
+	}
+	// #endregion
+}

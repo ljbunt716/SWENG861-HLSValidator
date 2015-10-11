@@ -1,0 +1,62 @@
+package validators;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import hlsfiles.HLSDirectory;
+import hlsfiles.HLSFileWDirectory;
+
+public class Validator {
+	public HLSFileWDirectory File;
+	public static List<Error> Errors;
+	public Boolean IsValidFile;
+
+	public Validator() {
+		IsValidFile = false;
+		Errors = new ArrayList<Error>();
+	}
+
+	public Boolean IsValid() {
+		return false;
+	}
+
+	public void ValidateFile() {
+
+		// Step 1 - Check File Type
+		if (IsFileTypeValid()) {
+			// Step 2 - Check File Size
+			if (DoAllFilesExistValid()) {
+				IsValidFile = true; // this will go in final Valid check
+			}
+		}
+
+		System.out.println("*****File: " + File.FileName + "*****");
+		if (!IsValidFile) {
+			for (Error error : Errors) {
+				System.out.println("Fail Area: " + error.FailArea);
+				System.out.println("Fail Message: " + error.FailMessage);
+			}
+
+		} else {
+			System.out.println("Passed Validation");
+		}
+	}
+
+	// region Validations
+	private Boolean IsFileTypeValid() {
+		FileTypeValidator fileTypeValidator = new FileTypeValidator(File);
+		return fileTypeValidator.IsValid();
+	}
+
+	private Boolean DoAllFilesExistValid() {
+		FileExistsValidator fileExistValidator = new FileExistsValidator(File);
+		return fileExistValidator.IsValid();
+	}
+	// endregion
+
+	// Adds an error to the Validation Error list
+	public void AddValidationError(String message, String area) {
+		Errors.add(new Error(message, area));
+	}
+
+}

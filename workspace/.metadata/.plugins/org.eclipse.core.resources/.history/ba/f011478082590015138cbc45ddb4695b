@@ -1,0 +1,23 @@
+package validators;
+
+import hlsfiles.HLSFile;
+
+public class FileTypeValidator extends Validator {
+
+	public FileTypeValidator() {
+	}
+
+	// public FileTypeValidator(HLSFile file) {
+	// File = file;
+	// }
+
+	public Boolean IsValid() {
+		System.out.println(super.File.FileExtension);
+		Boolean isAcceptableFileExt = (File.FileExtension == "m38u");
+
+		if (!isAcceptableFileExt)
+			AddValidationError("File Extension is Incorrect for File: " + File.FileName, "File Type Validation");
+
+		return isAcceptableFileExt;
+	}
+}

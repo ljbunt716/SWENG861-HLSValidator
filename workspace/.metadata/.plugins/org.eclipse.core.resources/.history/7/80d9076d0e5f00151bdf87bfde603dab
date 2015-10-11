@@ -1,0 +1,5 @@
+package validators.EXTXSTREAMINF.Bandwidth;
+
+public class BandwidthValueValidator {
+
+}

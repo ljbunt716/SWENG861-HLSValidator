@@ -1,0 +1,18 @@
+package common;
+
+public class CommonFile {
+
+	// Returns the extension of a file
+	public static String GetFileExtension(String fileName) {
+
+		int index = fileName.lastIndexOf('.');
+		if (index > 0) {
+			return fileName.substring(index + 1);
+		}
+
+		return "";
+	}
+	
+	
+
+}

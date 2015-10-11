@@ -1,0 +1,13 @@
+package validators;
+
+public class FileTypeValidator extends Validator {
+
+	public Boolean IsValid() {
+		Boolean isAcceptableFileExt = (File.FileExtension == ".m38u");
+
+		if (!isAcceptableFileExt)
+			AddValidationError("File Extension is Incorrect for File: " + File.FileName, "File Type Validation");
+
+		return isAcceptableFileExt;
+	}
+}

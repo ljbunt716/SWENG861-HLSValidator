@@ -1,0 +1,20 @@
+package validators;
+
+import java.lang.Object;
+
+
+public class Validator {
+	String HLSText;
+
+	public Validator() {
+	}
+
+	public Boolean IsValid() {
+		return false;
+	}
+
+	public void ValidateFile(String file) {
+	
+	}
+
+}

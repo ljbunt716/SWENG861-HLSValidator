@@ -1,0 +1,97 @@
+package validators.EXTXTargetDuration;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import common.CommonFloat;
+import common.CommonInteger;
+import common.CommonList;
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+import validators.EXTINF.EXTINFValidator;
+
+//#EXT-X-TARGETDURATION value must be greater than or equal to EXTINF value
+public class EXTXTargetDurationValueValidator extends Validator {
+
+	public EXTXTargetDurationValueValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		int targetValue = 0;
+		List<Integer> infValues = new ArrayList<Integer>();
+
+		try {
+			List<String> allLinesInFile = CommonList.SplitOnNewLine(File.HLSText);
+			String targetDurationValue = GetTargetDurationValue(allLinesInFile);
+			int targetDurationValueLineNumber = GetTargetDurationValueLineNumber(allLinesInFile);
+
+			// First check value is Valid Float
+			if (IsValidFloat(targetDurationValue)) {
+
+				if (CommonInteger.tryParse(targetDurationValue))
+					targetValue = Integer.parseInt(targetDurationValue);
+				else {
+					super.AddValidationError(
+							"File has #EXT-X-TARGETDURATION Value is not a valid Integer - #EXT-X-TARGETDURATION = "
+									+ targetDurationValue,
+							"Invalid #EXT-X-TARGETDURATION Value Validation", targetDurationValueLineNumber);
+					return;
+				}
+
+				// Get all INF Values in File
+				infValues = EXTINFValidator.GetEXTINFValues(allLinesInFile);
+
+				for (Integer infValue : infValues) {
+					// EXTINF value MUST be less than or equal to
+					// EXT-X-TARGETDURATION value
+					if (infValue > targetValue) {
+						super.AddValidationError(
+								"File has #EXT-X-TARGETDURATION Value less than EXTINF value - #EXT-X-TARGETDURATION = "
+										+ targetValue + ", #EXTINF = " + infValue,
+								"Invalid #EXT-X-TARGETDURATION Value Validation");
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			super.AddValidationError(
+					"File has invalid #EXT-X-TARGETDURATION Value: Target Duration Value = " + targetValue,
+					"Invalid #EXT-X-TARGETDURATION Value Validation");
+		}
+
+	}
+
+	private Boolean IsValidFloat(String targetDurationValue) {
+		if (!CommonFloat.tryParse(targetDurationValue)) {
+			super.AddValidationError("File has invalid #EXT-X-TARGETDURATION Value: " + targetDurationValue,
+					"Invalid #EXT-X-TARGETDURATION Value Validation");
+			return false;
+		}
+
+		return true;
+	}
+
+	private String GetTargetDurationValue(List<String> allLinesInFile) {
+		for (String line : allLinesInFile) {
+			if (line.startsWith("#EXT-X-TARGETDURATION")) {
+				return line.split(":")[1].trim();
+			}
+		}
+
+		return "";
+	}
+
+	private int GetTargetDurationValueLineNumber(List<String> allLinesInFile) {
+		int lineNumber = 0;
+
+		for (String line : allLinesInFile) {
+			lineNumber++;
+			if (line.startsWith("#EXT-X-TARGETDURATION")) {
+				return lineNumber;
+			}
+		}
+
+		return 0;
+	}
+}

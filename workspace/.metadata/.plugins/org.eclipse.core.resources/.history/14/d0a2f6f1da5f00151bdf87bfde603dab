@@ -1,0 +1,37 @@
+package validators.EXTXMEDIASEQUENCE;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class EXTXMEDIASEQUENCEValidator extends Validator {
+
+	public EXTXMEDIASEQUENCEValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		//Validate only if file contains #EXT-X-MEDIA-SEQUENCE tag 
+		if (File.HLSText.toLowerCase().contains("#ext-x-media-sequence")) {
+			// Step 1 - Validate #EXT-X-MEDIA-SEQUENCE tag is uppercase
+			ValidateEXTXMediaSequenceIsUpper();
+
+			// Step 2 - Validate EXT-X-MEDIA-SEQUENCE value is integer
+			ValidateEXTXMediaSequenceValueIsValid();
+		}
+	}
+
+	// #region - Validators
+
+	private void ValidateEXTXMediaSequenceIsUpper() {
+		FileHasEXTXMEDIASEQUENCEAsUpperValidator isUpper = new FileHasEXTXMEDIASEQUENCEAsUpperValidator(File);
+		isUpper.Validate();
+	}
+
+	private void ValidateEXTXMediaSequenceValueIsValid() {
+		EXTXMEDIASEQUENCEValueValidator mediaSequenceValue = new EXTXMEDIASEQUENCEValueValidator(File);
+		mediaSequenceValue.Validate();
+
+	}
+
+	// #endregion
+}

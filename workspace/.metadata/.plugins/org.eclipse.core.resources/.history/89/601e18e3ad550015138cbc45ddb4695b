@@ -1,0 +1,6 @@
+package validators;
+
+public class Errors {
+	public static String FailMessage;
+	public static String FailArea;
+}

@@ -1,0 +1,27 @@
+package validators.EXTINF;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class FileContainsEXTINFValidator extends Validator {
+
+	public FileContainsEXTINFValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+
+		try {
+			if (!File.HLSText.contains("#EXTINF:"))
+				AddErrorMessage();
+
+		} catch (Exception e) {
+			AddErrorMessage();
+		}
+
+	}
+
+	private void AddErrorMessage() {
+		super.AddValidationError("File is missing tag - #EXTINF:", "Missing #EXTINF: tag Validation");
+	}
+}

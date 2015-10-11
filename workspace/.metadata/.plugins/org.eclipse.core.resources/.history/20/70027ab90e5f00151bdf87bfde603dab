@@ -1,0 +1,43 @@
+package validators.EXTXSTREAMINF.Bandwidth;
+
+import java.util.Arrays;
+import java.util.List;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+import common.CommonInteger;
+
+public class BandwidthValueValidator extends Validator {
+
+	public BandwidthValueValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		int lineNumber = 0;
+
+		try {
+			List<String> allLinesInFile = Arrays.asList(File.HLSText.split("\\n"));
+			for (String line : allLinesInFile) {
+				lineNumber++;
+				if (line.startsWith("#EXT-X-STREAM-INF:")) {
+					if (line.contains("BANDWIDTH")) {
+						String bandwidthValue = line.substring(line.indexOf("BANDWIDTH=" + 10));//+10 to remove BANDWIDTH=
+						System.out.println(bandwidthValue);
+						if (!CommonInteger.tryParse(bandwidthValue))
+							AddErrorMessage(lineNumber);
+					}
+
+				}
+			}
+		} catch (Exception e) {
+
+		}
+	}
+
+	private void AddErrorMessage(int lineNumber) {
+		super.AddValidationError("EXT-X-STREAM-INF line number - " + lineNumber + " has invalid BANDWIDTH value: ",
+				"Invalid BANDWIDTH value Validation");
+	}
+
+}

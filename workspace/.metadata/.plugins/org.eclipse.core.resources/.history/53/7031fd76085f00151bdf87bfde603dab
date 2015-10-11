@@ -1,0 +1,85 @@
+package validators;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import hlsfiles.HLSFileWDirectory;
+
+public class Validator {
+	public HLSFileWDirectory File;
+	public static List<Error> Errors;
+	public Boolean IsValidFile;
+
+	public Validator() {
+		IsValidFile = false;
+	}
+
+	public Boolean IsValid() {
+		return false;
+	}
+
+	public void ValidateFile() {
+		Errors = new ArrayList<Error>();
+
+		// Step 1 - Check File Type
+		ValidateFileType();
+
+		// Step 2 - Check that all child files exist
+		ValidateAllFilesExist();
+
+		// Step 3 - Check if File starts with #EXTM3U
+		ValidateFileStartWithEXTM3U();
+
+		// Step 4 - Validate all #EXT is uppercase
+		ValidateEXTIsUpper();
+
+		// Step 5 - Validate EXT-X-STREAM-INF line exists
+		ValidateEXTXSTREAMINFExists();
+
+		IsValidFile = (Errors.size() == 0);
+
+		System.out.println("*****File: " + File.FileName + "*****");
+		if (!IsValidFile) {
+			for (Error error : Errors) {
+				System.out.println("Fail Area: " + error.FailArea);
+				System.out.println("Fail Message: " + error.FailMessage);
+			}
+
+		} else {
+			System.out.println("Passed Validation");
+		}
+	}
+
+	// region Validations
+	private void ValidateFileType() {
+		FileTypeValidator fileType = new FileTypeValidator(File);
+		fileType.Validate();
+	}
+
+	private void ValidateAllFilesExist() {
+		FileExistsValidator fileExist = new FileExistsValidator(File);
+		fileExist.Validate();
+	}
+
+	private void ValidateFileStartWithEXTM3U() {
+		FileBeginWithValidator fileBeginWithEXTM3U = new FileBeginWithValidator(File);
+		fileBeginWithEXTM3U.Validate();
+	}
+
+	private void ValidateEXTIsUpper() {
+		FileHasEXTAsUpperValidator fileHasEXTAsUpper = new FileHasEXTAsUpperValidator(File);
+		fileHasEXTAsUpper.Validate();
+	}
+
+	private void ValidateEXTXSTREAMINFExists() {
+		FileContainsEXTXSTREAMINFValidator fileContainsEXTXSTREAMINF = new FileContainsEXTXSTREAMINFValidator(File);
+		fileContainsEXTXSTREAMINF.Validate();
+	}
+	// endregion
+
+	// Adds an error to the Validation Error list
+	public void AddValidationError(String message, String area) {
+		Errors.add(new Error(message, area));
+	}
+
+}

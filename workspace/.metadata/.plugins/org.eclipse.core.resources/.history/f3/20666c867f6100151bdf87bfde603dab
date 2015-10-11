@@ -1,0 +1,36 @@
+package validators.EXTXMEDIASEQUENCE;
+
+import java.util.Arrays;
+import java.util.List;
+
+import common.CommonInteger;
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class EXTXMEDIASEQUENCEValueValidator extends Validator {
+
+	public EXTXMEDIASEQUENCEValueValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+
+		List<String> allLinesInFile = Arrays.asList(File.HLSText.split("\\n"));
+		String mediaSequenceValue = GetMediaSequenceValue(allLinesInFile);
+
+		if (!CommonInteger.tryParse(mediaSequenceValue))
+			super.AddValidationError("File contains incorrect #EXT-X-MEDIA-SEQUENCE Value - " + mediaSequenceValue,
+					"#EXT-X-MEDIA-SEQUENCE Value Validation");
+
+	}
+
+	private String GetMediaSequenceValue(List<String> allLinesInFile) {
+		for (String line : allLinesInFile) {
+			if (line.startsWith("#EXT-X-MEDIA-SEQUENCE")) {
+				return line.split(":")[1].trim();
+			}
+		}
+
+		return "";
+	}
+}

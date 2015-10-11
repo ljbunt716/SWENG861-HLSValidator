@@ -1,0 +1,34 @@
+package hlsfiles;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+public class HLSDirectory {
+	public String DirectoryPath;
+	public List<File> Files;
+	public List<String> FileNames;
+
+	public HLSDirectory() {
+		Files = new ArrayList<File>();
+		FileNames = new ArrayList<String>();
+	}
+
+	public HLSDirectory(String directoryPath) {
+		this();
+		DirectoryPath = directoryPath;
+
+		File[] files = new File(DirectoryPath).listFiles();
+		
+		System.out.println(files.length);
+
+		if (files != null) {
+			for (File file : files) {
+				if (file.isFile()) {
+					Files.add(file);
+					FileNames.add(file.getName());
+				}
+			}
+		}
+	}
+}

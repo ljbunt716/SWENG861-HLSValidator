@@ -1,0 +1,38 @@
+package validators.EXTXENDLIST;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class EXTXENDLISTValidators extends Validator {
+
+	public EXTXENDLISTValidators(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+
+		// Validate only if file contains #EXT-X-ENDLIST tag
+		if (File.HLSText.toLowerCase().contains("ext-x-endlist")) {
+
+			// Step 1 - Validate #EXT-X-ENDLIST tag text is correct
+			ValidateEXTXENDLISTIsCorrectText();
+
+			// Step 2 - Validate #EXT-X-ENDLIST is UPPER
+			ValidateEXTXENDLISTIsUpper();
+
+		}
+	}
+
+	// #region - Validators
+	private void ValidateEXTXENDLISTIsCorrectText() {
+		EXTXENDLISTIsCorrectTextValidator isCorrectText = new EXTXENDLISTIsCorrectTextValidator(File);
+		isCorrectText.Validate();
+	}
+
+	private void ValidateEXTXENDLISTIsUpper() {
+		EXTXENDLISTIsUpperValidator isUpper = new EXTXENDLISTIsUpperValidator(File);
+		isUpper.Validate();
+	}
+
+	// #endregion
+}

@@ -1,0 +1,19 @@
+package validators.EXTXMEDIASEQUENCE;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+import validators.Common.CaseValidator;
+
+public class FileHasEXTXMEDIASEQUENCEAsUpperValidator extends Validator {
+
+	public FileHasEXTXMEDIASEQUENCEAsUpperValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		if (!CaseValidator.IsValidCase(File.HLSText, "#EXT-X-MEDIA-SEQUENCE"))
+			super.AddValidationError("All mentions of #EXT-X-MEDIA-SEQUENCE in file are not Uppercase : ",
+					"File Has #EXT-X-MEDIA-SEQUENCE all Uppercase Validation");
+	}
+
+}

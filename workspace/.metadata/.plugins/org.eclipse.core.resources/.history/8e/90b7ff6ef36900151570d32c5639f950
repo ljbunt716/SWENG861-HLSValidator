@@ -1,0 +1,24 @@
+package validators.MediaURI;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class MediaURIValidator extends Validator {
+
+	public MediaURIValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+	
+	public void Validate(){
+	//Step 1 - Validate all Media URI's are incremented by 1
+		ValidateMediaURIOrder();
+	}
+	
+	
+	//#region Validators
+	private void ValidateMediaURIOrder(){
+		
+	}
+	
+	//#endregion
+}

@@ -1,0 +1,44 @@
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import hlsfiles.HLSFile;
+import hlsfiles.HLSDirectory;
+import validators.Validator;
+
+public class Main {
+
+	public static void main(String[] args) throws MalformedURLException {
+		// For Production
+		// String url =
+		// "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
+		
+
+		// For Testing
+		 String url = new File("C:\\Users\\Laura\\Desktop\\Arris\\ipad.m3u8").toURI().toURL().toString();
+
+		// HLSDirectory allFiles = new HLSDirectory(directory);
+		HLSFile hlsFile = null;
+		try {
+			hlsFile = new HLSFile(new URL(url));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Mal");
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			System.out.println("URI");
+			e.printStackTrace();
+		}
+
+		// Now Validate
+		Validator v = new Validator();
+		v.File = hlsFile;
+		// v.Directory = allFiles;
+		v.ValidateFile();
+		// }
+
+	}
+
+}

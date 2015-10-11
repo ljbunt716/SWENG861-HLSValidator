@@ -1,0 +1,18 @@
+package validators.EXTXENDLIST;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+import validators.Common.CaseValidator;
+
+public class EXTXENDLISTIsUpperValidator extends Validator {
+
+	public EXTXENDLISTIsUpperValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		if (!CaseValidator.IsValidCase(File.HLSText, "#EXT-X-ENDLIST"))
+			super.AddValidationError("All mentions of #EXT-X-ENDLIST in file are not Uppercase : ",
+					"File Has #EXT-X-ENDLIST all Uppercase Validation");
+	}
+}

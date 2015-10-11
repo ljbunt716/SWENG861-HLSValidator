@@ -1,0 +1,21 @@
+package validators.EXTXTargetDuration;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class EXTTargetDurationValidator extends Validator {
+
+	public EXTTargetDurationValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		//Step 1 - Validate EXT-X-TARGETDURATION exists
+		ValidateEXTX
+	}
+
+	// #region - Validators
+
+	// #endregion
+
+}

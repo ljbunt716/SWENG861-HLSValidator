@@ -1,0 +1,158 @@
+package validators;
+
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.MasterFile.MasterFileValidator;
+import validators.MediaFile.MediaFileValidator;
+
+public class Validator {
+	public HLSFileWDirectory File;
+	public static List<Error> Errors;
+
+	public Boolean IsValidFile() {
+		return (Errors.size() == 0);
+	}
+
+	public Validator() {
+	}
+
+	public Boolean IsValid() {
+		return false;
+	}
+
+	public void ValidateFile() {
+		Errors = new ArrayList<Error>();
+
+		// Step 1 - Check File Type
+		// DO NOT PROCEED IF INVALID FILE TYPE
+		if (IsValidFileType()) {
+
+			// Step 2 - Check that all child files exist
+			ValidateAllFilesExist();
+
+			// Step 3 - Check if File starts with #EXTM3U
+			ValidateFileStartWithEXTM3U();
+
+			// Step 4 - Validate all #EXT is uppercase
+			ValidateEXTIsUpper();
+
+			// Step 5 - Validate all validation dependent upon file type
+			// Only Process if it's Main File
+			if (File.IsMasterFile)
+				ValidateMasterFileOnlyValidation();
+			else
+				ValidateMediaFileOnlyValidation();
+
+		}
+
+		// IsValidFile = (Errors.size() == 0);
+		if (!IsValidFile())
+			WriteErrorsToFile();
+
+	}
+
+	private void WriteErrorsToFile() {
+
+		// String desktop = System.getProperty("user.home") +
+		// "/Desktop/HLSErrors";
+		String path = "./_HLSErrors";
+
+		// Create folder to put files in if folder not already created
+		java.io.File folder = new java.io.File(path);
+		if (!folder.exists())
+			folder.mkdir();
+
+		java.io.File output = new java.io.File(path + "/Error-" + File.FileBaseName + ".txt");
+
+		FileOutputStream fos;
+		BufferedWriter bw = null;
+		try {
+			fos = new FileOutputStream(output);
+			bw = new BufferedWriter(new OutputStreamWriter(fos));
+
+			// Write header row
+			bw.write("Error Number" + "\t");
+			bw.write("Error Type" + "\t");
+			bw.write("File Name" + "\t");
+			bw.write("Details of Error" + "\t");
+			bw.write("Line Number" + "\t");
+
+			// Write Errors
+			int errorCount = 1;
+			for (Error error : Errors) {
+				bw.newLine();
+				bw.write(errorCount++ + "\t");
+				bw.write(error.FailArea + "\t");
+				bw.write(File.FileName + "\t");
+				bw.write(error.FailMessage + "\t");
+				if (error.LineNumber > 0)
+					bw.write(error.LineNumber + "\t");
+			}
+
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (bw != null)
+					bw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// region Validations
+	private Boolean IsValidFileType() {
+		FileTypeValidator fileType = new FileTypeValidator(File);
+		return fileType.IsValid();
+	}
+
+	private void ValidateAllFilesExist() {
+		FileExistsValidator fileExist = new FileExistsValidator(File);
+		fileExist.Validate();
+	}
+
+	private void ValidateFileStartWithEXTM3U() {
+		FileBeginWithValidator fileBeginWithEXTM3U = new FileBeginWithValidator(File);
+		fileBeginWithEXTM3U.Validate();
+	}
+
+	private void ValidateEXTIsUpper() {
+		FileHasEXTAsUpperValidator fileHasEXTAsUpper = new FileHasEXTAsUpperValidator(File);
+		fileHasEXTAsUpper.Validate();
+	}
+
+	private void ValidateMasterFileOnlyValidation() {
+		MasterFileValidator mainFile = new MasterFileValidator(File);
+		mainFile.Validate();
+	}
+
+	private void ValidateMediaFileOnlyValidation() {
+		MediaFileValidator childFile = new MediaFileValidator(File);
+		childFile.Validate();
+	}
+
+	// endregion
+
+	// Adds an error to the Validation Error list
+	public void AddValidationError(String message, String area) {
+		Errors.add(new Error(message, area));
+	}
+
+	public void AddValidationError(String message, String area, int lineNumber) {
+		Errors.add(new Error(message, area, lineNumber));
+	}
+
+}

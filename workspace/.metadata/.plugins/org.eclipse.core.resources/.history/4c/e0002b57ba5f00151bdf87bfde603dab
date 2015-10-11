@@ -1,0 +1,14 @@
+package common;
+
+public class CommonFloat {
+	
+	public static Boolean tryParse(String value) {
+		try {
+		decimal.
+			D.parseInt(value);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+}

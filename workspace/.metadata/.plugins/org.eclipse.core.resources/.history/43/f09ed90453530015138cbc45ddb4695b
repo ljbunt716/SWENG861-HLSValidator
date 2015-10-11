@@ -1,0 +1,10 @@
+
+public class Validator {
+	String HLSText;
+
+	public Validator() {
+	}
+	
+	
+
+}

@@ -1,0 +1,44 @@
+package validators.EXTXVERSION;
+
+import java.util.List;
+
+import common.CommonInteger;
+import common.CommonList;
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class FileContainsValidVersionNumberValidator extends Validator {
+
+	public FileContainsValidVersionNumberValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	// #EXT-X-VERSION:<n> where n is an integer indicating the protocol
+	// compatibility version number.
+	public void Validate() {
+		try {
+			List<String> allLinesInFile = CommonList.SplitOnNewLine(File.HLSText);
+			int lineNumber = 0;
+
+			for (String line : allLinesInFile) {
+				lineNumber++;
+
+				if (line.startsWith("#EXT-X-VERSION")) {
+					String versionNumber = line.split(":")[1].trim();
+
+					if (!CommonInteger.tryParse(versionNumber))
+						super.AddValidationError("#EXT-X-VERSION: has invalid value - " + versionNumber,
+								"Invalid #EXT-X-VERSION: Value Validation", lineNumber);
+				}
+			}
+
+		} catch (Exception e) {
+			AddErrorMessage();
+		}
+	}
+
+	private void AddErrorMessage() {
+		super.AddValidationError("#EXT-X-VERSION: has invalid value.", "Invalid #EXT-X-VERSION: Value Validation");
+	}
+
+}

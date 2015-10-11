@@ -1,0 +1,20 @@
+package validators;
+
+import hlsfiles.HLSFile;
+
+
+public class Validator {
+	HLSFile File;
+
+	public Validator() {
+	}
+
+	public Boolean IsValid() {
+		return false;
+	}
+
+	public void ValidateFile(String file) {
+	
+	}
+
+}

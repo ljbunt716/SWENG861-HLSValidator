@@ -1,0 +1,17 @@
+package common;
+
+import java.util.List;
+
+public class CommonString {
+
+	// Converts a List<String> to a comma separated string
+	public static String GetCommaSeparatedString(List<String> stringList) {
+		StringBuilder sb = new StringBuilder();
+
+		for (String string : stringList) {
+			sb.append(string).append(",");
+		}
+
+		return sb.toString();
+	}
+}

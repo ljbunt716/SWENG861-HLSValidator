@@ -1,0 +1,59 @@
+package validators;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import common.CommonFile;
+import common.CommonString;
+import hlsfiles.HLSDirectory;
+import hlsfiles.HLSFile;
+
+//Validates the number of files in Directory = Number of Files listed in File
+public class FileExistsValidator extends Validator {
+
+	public FileExistsValidator(HLSFile file) {
+		File = file;
+	}
+
+	public Boolean IsValid() {
+		Boolean isValidFile = true;
+		for (String lowerLevelFile : File.LowerLevelFiles) {
+			if (!DoesFileExist(File.Directory.DirectoryPath, lowerLevelFile)) {
+				AddValidationError("File is missing from Directory: " + lowerLevelFile, "File Type Validation");
+				isValidFile = false;
+			}
+		}
+
+		return isValidFile;
+	}
+
+	public Boolean DoesFileExist(String directory, String fileName) {
+
+		try {
+			System.out.println(directory);
+			System.out.println(fileName);
+			URL url = new URL(CommonFile.PathCombine(directory, fileName).replace("\\", "//"));
+			
+			HttpURLConnection.setFollowRedirects(false);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("HEAD");
+
+			return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+
+}

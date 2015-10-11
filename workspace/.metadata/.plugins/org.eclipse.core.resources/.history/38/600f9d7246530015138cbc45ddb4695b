@@ -1,0 +1,17 @@
+
+public class HLSFile {
+	String Url;
+	String HLStext;
+	
+	
+	public HLSFile(){}
+	
+	public void GetHLSText()
+	{
+		
+		
+	}
+	
+	}
+
+

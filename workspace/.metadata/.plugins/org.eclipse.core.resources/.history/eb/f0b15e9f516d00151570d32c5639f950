@@ -1,0 +1,37 @@
+package validators.EXTXVERSION;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+//Validate #EXT-X-VERSION: tag
+public class EXTXVERSIONValidator extends Validator {
+
+	public EXTXVERSIONValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+
+		// Step 1 -Validate file has ONLY 1 version #
+		ValidateOneVersionExists();
+
+		// Step 2 - Validate version number is integer
+		ValidateVersionNumberIsValid();
+
+	}
+
+	// #region - Validators
+
+	private void ValidateOneVersionExists() {
+		FileContainsOneEXTXVERSIONTagValidator oneVersionTag = new FileContainsOneEXTXVERSIONTagValidator(File);
+		oneVersionTag.Validate();
+	}
+
+	private void ValidateVersionNumberIsValid() {
+		FileContainsValidVersionNumberValidator versionNumber = new FileContainsValidVersionNumberValidator(File);
+		versionNumber.Validate();
+	}
+
+	// #endregion
+
+}

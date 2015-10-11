@@ -1,0 +1,14 @@
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		//HLSFile file = new HLSFile(new URL("http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"));
+
+		//System.out.println(file.HLSText);
+
+	}
+
+}

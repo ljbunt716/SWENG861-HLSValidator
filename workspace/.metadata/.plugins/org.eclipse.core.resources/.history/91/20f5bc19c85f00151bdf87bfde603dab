@@ -1,0 +1,51 @@
+package validators.EXTXVERSION;
+
+import java.util.List;
+
+import common.CommonInteger;
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class EXTXVERSIONValidator extends Validator {
+
+	public EXTXVERSIONValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+
+		// Step 1 -Validate file has ONLY 1 version #
+		ValidateOneVersionExists();
+
+		// Step 2 - Validate version number is integer
+		ValidateVersionNumberIsValid();
+
+	}
+
+	// #region - Validators
+
+	private void ValidateOneVersionExists() {
+		FileContainsOneEXTXVERSIONTagValidator oneVersionTag = new FileContainsOneEXTXVERSIONTagValidator(File);
+		oneVersionTag.Validate();
+	}
+
+	private void ValidateVersionNumberIsValid() {
+		FileContainsValidVersionNumberValidator versionNumber = new FileContainsValidVersionNumberValidator(File);
+		versionNumber.Validate();
+	}
+
+	// #endregion
+
+	public static int GetVersionNumber(List<String> allLinesInFile) {
+		for (String line : allLinesInFile) {
+			if (line.startsWith("#EXTINF")) {
+				String versionNumber = line.split(":")[1].substring(",");
+				System.out.println("FF-" + versionNumber);
+				if (CommonInteger.tryParse(line.split(":")[1]))
+					return Integer.parseInt(line.split(":")[1]);
+			}
+		}
+
+		return 0;
+	}
+}

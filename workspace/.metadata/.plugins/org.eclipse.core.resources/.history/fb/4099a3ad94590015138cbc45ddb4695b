@@ -1,0 +1,34 @@
+import java.io.File;
+import hlsfiles.HLSFile;
+import hlsfiles.HLSDirectory;
+import validators.Validator;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// String directory =
+		// "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
+		String directory = "C:\\Users\\Laura\\Desktop\\Arris\\Arris";
+
+		HLSDirectory allFiles = new HLSDirectory(directory);
+		HLSFile hlsFile = null;
+
+		for (File file : allFiles.Files) {
+			hlsFile = new HLSFile(file);
+
+			// for (String f : file.LowerLevelFiles) {
+			// System.out.println(f);
+			// }
+
+			// System.out.println(file.HLSText);
+
+			// Now Validate
+			Validator v = new Validator();
+			v.File = hlsFile;
+			v.Directory = allFiles;
+			v.ValidateFile();
+		}
+
+	}
+
+}

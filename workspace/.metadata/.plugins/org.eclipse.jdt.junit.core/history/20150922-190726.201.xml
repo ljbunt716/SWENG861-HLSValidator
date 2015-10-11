@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="EXTINFValidatorTest" project="HLSValidator" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="validators.EXTINF.EXTINFValidatorTest" time="0.0">
+    <testcase name="testDoesReturnIntGreaterThan0" classname="validators.EXTINF.EXTINFValidatorTest" time="0.0"/>
+    <testcase name="testDoesReturnIntEqual0" classname="validators.EXTINF.EXTINFValidatorTest" time="0.0"/>
+  </testsuite>
+</testrun>

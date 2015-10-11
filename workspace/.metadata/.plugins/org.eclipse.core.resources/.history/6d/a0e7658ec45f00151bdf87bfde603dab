@@ -1,0 +1,45 @@
+package validators.EXTXVERSION;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class FileContainsOneEXTXVERSIONTag extends Validator {
+
+	public FileContainsOneEXTXVERSIONTag(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+
+		try {
+			List<String> allLinesInFile = Arrays.asList(File.HLSText.split("\\n"));
+			int versionCount = GetVersionNumbers(allLinesInFile);
+
+			if (versionCount < 1)
+				super.AddValidationError("File is missing #EXT-X-VERSION: ", "Missing #EXT-X-VERSION Validation");
+			else if (versionCount > 1)
+				super.AddValidationError("File has more than one #EXT-X-VERSION: Tag ",
+						"Multiple #EXT-X-VERSION Tag Validation");
+
+		} catch (Exception e) {
+			super.AddValidationError("File is missing #EXT-X-VERSION: ", "Missing #EXT-X-VERSION Validation");
+		}
+	}
+
+	private int GetVersionNumbers(List<String> allLinesInFile) {
+		List<String> versionLines = new ArrayList<String>();
+
+		for (String line : allLinesInFile) {
+
+			if (line.startsWith("#EXT-X-VERSION:"))
+				versionLines.add(line);
+		}
+
+		return versionLines.size();
+	}
+
+}

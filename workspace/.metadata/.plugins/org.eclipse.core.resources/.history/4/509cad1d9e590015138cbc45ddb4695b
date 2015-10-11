@@ -1,0 +1,135 @@
+package hlsfiles;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import common.CommonFile;
+
+public class HLSFile {
+	public StringBuilder HLSText;
+	public String FileName;
+	public String FileBaseName;
+	public String FileExtension;
+	public List<String> LowerLevelFiles;
+
+	public HLSFile() {
+		HLSText = new StringBuilder();
+		LowerLevelFiles = new ArrayList<String>();
+	}
+
+	public HLSFile(URL url) throws URISyntaxException {
+		this(new File(url.toURI()));
+	}
+
+	public HLSFile(File file) {
+		FileName = file.getName();
+		FileBaseName = CommonFile.GetFileName(FileName);
+		FileExtension = CommonFile.GetFileExtension(FileName);
+		HLSText = GetHLSText(file);
+		LowerLevelFiles = GetLowerLevelFiles(file);
+	}
+
+	private StringBuilder GetHLSText(URL url) {
+		StringBuilder hlsText = new StringBuilder();
+
+		Scanner scanner = null;
+
+		try {
+			// Get the text from the file with provided URL
+			scanner = new Scanner(url.openStream());
+
+			// While there is something to get in file, append it to HLSText
+			while (scanner.hasNextLine()) {
+				hlsText.append(scanner.nextLine());
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (scanner != null)
+				scanner.close();
+		}
+
+		return hlsText;
+	}
+
+	private StringBuilder GetHLSText(File file) {
+		StringBuilder hlsText = new StringBuilder();
+
+		// Construct BufferedReader from FileReader
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+			String line = null;
+
+			while ((line = br.readLine()) != null) {
+				hlsText.append(line);
+			}
+		} catch (Exception e) {
+			System.out.println("Error getting HLSText from file.");
+		}
+
+		return hlsText;
+	}
+
+	private List<String> GetLowerLevelFiles(URL url) {
+		List<String> lowerLevelFiles = new ArrayList<String>();
+		Scanner scanner = null;
+		String nextLine = "";
+
+		try {
+			// Get the text from the file with provided URL
+			scanner = new Scanner(url.openStream());
+
+			// While there is something to get in file, append it to HLSText
+			while (scanner.hasNextLine()) {
+				nextLine = scanner.nextLine();
+				if (IsLowerLevelFile(nextLine))
+					lowerLevelFiles.add(nextLine);
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (scanner != null)
+				scanner.close();
+		}
+
+		return lowerLevelFiles;
+	}
+
+	private List<String> GetLowerLevelFiles(File file) {
+		List<String> lowerLevelFiles = new ArrayList<String>();
+
+		// Construct BufferedReader from FileReader
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+			String line = null;
+
+			while ((line = br.readLine()) != null) {
+
+				if (IsLowerLevelFile(line)) {
+					System.out.println(line);
+					lowerLevelFiles.add(line);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Error getting Lower Level Files from file.");
+		}
+
+		return lowerLevelFiles;
+	}
+
+	private Boolean IsLowerLevelFile(String line) {
+		return !line.startsWith("#") && line.contains(".m3u8");
+	}
+
+}

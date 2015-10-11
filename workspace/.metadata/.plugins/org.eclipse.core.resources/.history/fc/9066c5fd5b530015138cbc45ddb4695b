@@ -1,0 +1,15 @@
+package validators;
+
+public class SizeValidator extends Validator {
+	
+	public SizeValidator (){
+		FailArea = "Size Validation";
+	}
+
+	public Boolean IsValid() {
+
+		FailMessage = "Sting";
+		return false;
+	}
+
+}

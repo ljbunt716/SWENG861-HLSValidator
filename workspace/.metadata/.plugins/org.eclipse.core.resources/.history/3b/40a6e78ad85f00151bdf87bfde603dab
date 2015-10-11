@@ -1,0 +1,66 @@
+package validators.EXTXTargetDuration;
+
+import java.util.Arrays;
+import java.util.List;
+
+import common.CommonFloat;
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+import validators.EXTINF.EXTINFValidator;
+
+public class EXTXTargetDurationValueValidator extends Validator {
+
+	public EXTXTargetDurationValueValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		try {
+			List<String> allLinesInFile = Arrays.asList(File.HLSText.split("\\n"));
+			String targetDurationValue = GetTargetDurationValue(allLinesInFile);
+
+			// First check value is Valid Float
+			if (IsValidFloat(targetDurationValue)) {
+				int targetValue = Integer.parseInt(targetDurationValue);
+				int infValue = EXTINFValidator.GetEXTINFValue(allLinesInFile);
+				
+				System.out.println("INF - " + infValue);
+				System.out.println("Target - " + targetValue);
+
+				// EXTINF value MUST be less than or equal to
+				// EXT-X-TARGETDURATION value
+				if (infValue > targetValue){
+					System.out.println("sdg");
+					super.AddValidationError(
+							"File has #EXT-X-TARGETDURATION Value less than EXTINF value - " + targetDurationValue,
+							"Invalid #EXT-X-TARGETDURATION Value Validation");
+			}
+	}
+
+		} catch (Exception e) {
+			super.AddValidationError("File has invalid #EXT-X-TARGETDURATION Value ",
+					"Invalid #EXT-X-TARGETDURATION Value Validation");
+		}
+
+	}
+
+	private Boolean IsValidFloat(String targetDurationValue) {
+		if (!CommonFloat.tryParse(targetDurationValue)) {
+			super.AddValidationError("File has invalid #EXT-X-TARGETDURATION Value " + targetDurationValue,
+					"Invalid #EXT-X-TARGETDURATION Value Validation");
+			return false;
+		}
+
+		return true;
+	}
+
+	private String GetTargetDurationValue(List<String> allLinesInFile) {
+		for (String line : allLinesInFile) {
+			if (line.startsWith("#EXT-X-TARGETDURATION")) {
+				return line.split(":")[1].trim();
+			}
+		}
+
+		return "";
+	}
+}

@@ -1,0 +1,48 @@
+package validators.EXTINF;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class EXTINFValidator extends Validator {
+
+	public EXTINFValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		// Step 1 - Validate file contains EXTINF tag
+		ValidateEXTINFExists();
+
+		// Step 2 - Validate EXTINF case
+		ValidateEXTINFCase();
+
+		// Step 3 - Validate EXTINF Value
+		ValidateEXTINFValue();
+
+		// Step 4 - Validate EXTINF contains title
+		ValidateEXTINFHasTitle();
+	}
+
+	// #region - Validators
+	private void ValidateEXTINFExists() {
+		FileContainsEXTINFValidator extinfExists = new FileContainsEXTINFValidator(File);
+		extinfExists.Validate();
+	}
+
+	private void ValidateEXTINFCase() {
+		FileHasEXTINFAsUpperValidator extinfCase = new FileHasEXTINFAsUpperValidator(File);
+		extinfCase.Validate();
+	}
+
+	private void ValidateEXTINFValue() {
+		ValidateEXTINFValueValidator extinfValue = new ValidateEXTINFValueValidator(File);
+		extinfValue.Validate();
+	}
+
+	private void ValidateEXTINFHasTitle() {
+		ValidateEXTINFHasTitleValidator extinfTitle = new ValidateEXTINFHasTitleValidator(File);
+		extinfTitle.Validate();
+	}
+
+	// #endregion
+}

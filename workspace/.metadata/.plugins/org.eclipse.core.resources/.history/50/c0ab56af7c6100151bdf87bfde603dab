@@ -1,0 +1,14 @@
+package validators.EXTINF;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class FileContainsEXTINFValidatorTest {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

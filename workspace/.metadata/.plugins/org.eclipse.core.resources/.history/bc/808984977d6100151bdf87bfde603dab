@@ -1,0 +1,28 @@
+package validators.EXTINF;
+
+import static org.junit.Assert.*;
+
+import java.net.URL;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import hlsfiles.HLSFileWDirectory;
+
+public class FileContainsEXTINFValidatorTest {
+
+	public FileContainsEXTINFValidator fileContainsEXTINF;
+	public HLSFileWDirectory File = new HLSFileWDirectory(
+			new URL("http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"), true);
+
+	@Before
+	public void setUp() throws Exception {
+		fileContainsEXTINF = new FileContainsEXTINFValidator(File);
+	}
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

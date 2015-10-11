@@ -1,0 +1,32 @@
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import hlsfiles.HLSFile;
+import validators.Validator;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		HLSFile file = null;
+		try {
+			file = new HLSFile(new URL("http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"));
+		
+//			for (String f : file.LowerLevelFiles) {
+//				System.out.println(f);
+//			}
+
+			// System.out.println(file.HLSText);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Now Validate
+		Validator v = new Validator();
+		v.File = file;
+		v.ValidateFile();
+
+	}
+
+}

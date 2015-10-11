@@ -1,0 +1,9 @@
+package validators;
+
+public class SizeValidator extends Validator {
+	
+	public Boolean IsValid() {
+		return true;
+	}
+
+}

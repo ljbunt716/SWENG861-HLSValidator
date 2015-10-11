@@ -1,0 +1,23 @@
+package hlsfiles;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import common.CommonFile;
+import common.CommonURL;
+
+public class HLSFileWDirectory extends HLSFile {
+	public HLSDirectory Directory;
+
+	public HLSFileWDirectory(URL url) throws URISyntaxException {
+		super(url);
+		Directory = new HLSDirectory(CommonFile.GetFileDirectory(url.toString()));
+	}
+}

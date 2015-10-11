@@ -1,0 +1,12 @@
+package validators;
+
+public class Error {
+	public String FailMessage;
+	public String FailArea;
+
+	public Error(String message, String area) {
+		System.out.println("hit");
+		FailMessage = message;
+		FailArea = area;
+	}
+}

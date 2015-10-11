@@ -1,0 +1,30 @@
+package validators;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import hlsfiles.HLSDirectory;
+import hlsfiles.HLSFile;
+
+//Validates the number of files in Directory = Number of Files listed in File
+public class FileAmountValidator extends Validator {
+
+	public FileAmountValidator(HLSFile file, HLSDirectory directory) {
+		File = file;
+		Directory = directory;
+	}
+
+	public Boolean IsValid() {
+
+		List<String> missingFiles = new ArrayList<>(Directory.FileNames);
+		missingFiles.removeAll(File.LowerLevelFiles);
+		
+		System.out.println(missingFiles);
+
+		return missingFiles.size() == 0; // return
+											// !Collections.disjoint(File.LowerLevelFiles,
+											// Directory.FileNames);
+	}
+
+}

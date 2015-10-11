@@ -1,0 +1,24 @@
+package validators.EXTXENDLIST;
+
+import java.util.Arrays;
+import java.util.List;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class EXTXENDLISTIsCorrectTextValidator extends Validator {
+
+	public EXTXENDLISTIsCorrectTextValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		List<String> allLinesInFile = Arrays.asList(File.HLSText.split("\\n"));
+
+		String lastLine = allLinesInFile.get(allLinesInFile.size() - 1);
+		if (!lastLine.toLowerCase().equals("#ext-x-endlist")) {
+			super.AddValidationError("Tag #EXT-X-ENDLIST in file is not correct text: ",
+					"File Has Invalid #EXT-X-ENDLIST Tag");
+		}
+	}
+}

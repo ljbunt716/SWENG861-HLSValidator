@@ -1,0 +1,16 @@
+package common;
+
+public class CommonString {
+
+}
+
+public String GetFileExtension(String FileName)
+{
+
+	int index = FileName.lastIndexOf('.');
+	if (index > 0) {
+	    return FileName.substring(index+1);
+	}
+	
+	return "";
+}

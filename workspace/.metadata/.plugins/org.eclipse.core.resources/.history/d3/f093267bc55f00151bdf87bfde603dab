@@ -1,0 +1,5 @@
+package validators.EXTXVERSION;
+
+public class FileContainsValidVersionNumberValidator {
+
+}

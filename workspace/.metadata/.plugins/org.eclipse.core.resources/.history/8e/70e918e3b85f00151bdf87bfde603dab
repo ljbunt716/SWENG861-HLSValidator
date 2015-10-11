@@ -1,0 +1,31 @@
+package validators.EXTINF;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class EXTINFValidator extends Validator {
+
+	public EXTINFValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		// Step 1 - Validate EXTINF case
+
+		// Step 2 - Validate EXTINF Value
+		ValidateEFTINFValue();
+	}
+
+	// #region - Validators
+	private void ValidateEFTINFCase() {
+		FileHasEXTINFAsUpperValidator extinfCase = new FileHasEXTINFAsUpperValidator(File);
+		extinfCase.Validate();
+	}
+
+	private void ValidateEFTINFValue() {
+		ValidateEXTINFValueValidator extinfValue = new ValidateEXTINFValueValidator(File);
+		extinfValue.Validate();
+	}
+
+	// #endregion
+}

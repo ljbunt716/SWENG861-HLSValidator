@@ -1,0 +1,13 @@
+package validators;
+
+public class SizeValidator extends Validator {
+
+	public SizeValidator() {
+	}
+
+	public static Boolean IsValid() {
+		AddValidationError("Sample error message", "Size Validation");
+		return false;
+	}
+
+}

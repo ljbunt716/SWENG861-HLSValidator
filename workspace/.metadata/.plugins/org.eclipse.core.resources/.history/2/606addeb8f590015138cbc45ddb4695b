@@ -1,0 +1,19 @@
+package validators;
+
+import java.util.Collections;
+
+import hlsfiles.HLSFile;
+
+//Validates the number of files in Directory = Number of Files listed in File
+public class FileAmountValidator extends Validator {
+
+	public FileAmountValidator(HLSFile file) {
+		File = file;
+	}
+
+	public Boolean IsValid() {
+		System.out.println(Directory.FileNames.size());
+		return Collections.disjoint(File.LowerLevelFiles, Directory.FileNames);
+	}
+
+}

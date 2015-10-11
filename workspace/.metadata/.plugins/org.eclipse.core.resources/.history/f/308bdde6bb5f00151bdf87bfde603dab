@@ -1,0 +1,11 @@
+package validators.EXTINF;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+
+public class ValidateEXTINFHasTagValidator extends Validator {
+
+	public ValidateEXTINFHasTagValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+}

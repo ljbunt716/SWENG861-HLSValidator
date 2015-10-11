@@ -1,0 +1,23 @@
+package validators.MainFile;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+import validators.EXTXSTREAMINF.EXTXSTREAMINFValidator;
+
+public class MainFileValidator extends Validator {
+
+	public MainFileValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		
+		// Step 1 - Validate EXT-X-STREAM-INF line
+		ValidateEXTXSTREAMINF();
+	}
+
+	private void ValidateEXTXSTREAMINF() {
+		EXTXSTREAMINFValidator EXTXSTREAMINF = new EXTXSTREAMINFValidator(File);
+		EXTXSTREAMINF.Validate();
+	}
+}

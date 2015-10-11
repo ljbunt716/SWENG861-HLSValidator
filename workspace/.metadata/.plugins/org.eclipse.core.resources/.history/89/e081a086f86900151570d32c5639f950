@@ -1,0 +1,11 @@
+package validators;
+
+public class Error {
+	public String FailMessage;
+	public String FailArea;
+
+	public Error(String message, String area) {
+		FailMessage = message;
+		FailArea = area;
+	}
+}

@@ -1,0 +1,18 @@
+package validators.EXTXTargetDuration;
+
+import hlsfiles.HLSFileWDirectory;
+import validators.Validator;
+import validators.Common.CaseValidator;
+
+public class FileHasEXTXDurationAsUpperValidator extends Validator {
+
+	public FileHasEXTXDurationAsUpperValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+		if (!CaseValidator.IsValidCase(File.HLSText, "#EXT-X-TARGETDURATION"))
+			super.AddValidationError("All mentions of #EXT-X-TARGETDURATION in file are not Uppercase : ",
+					"File Has #EXT-X-TARGETDURATION all Uppercase Validation");
+	}
+}

@@ -1,0 +1,14 @@
+package hlsfiles;
+
+import java.net.URISyntaxException;
+import java.net.URL;
+import common.CommonFile;
+
+public class HLSFileWDirectory extends HLSFile {
+	public HLSDirectory Directory;
+
+	public HLSFileWDirectory(URL url) throws URISyntaxException {
+		super(url);
+		Directory = new HLSDirectory(CommonFile.GetFileDirectory(url.toString()), super.Type);
+	}
+}

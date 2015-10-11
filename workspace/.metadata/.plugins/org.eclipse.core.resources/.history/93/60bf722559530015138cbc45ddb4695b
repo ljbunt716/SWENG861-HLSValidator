@@ -1,0 +1,11 @@
+package Validator;
+
+public class Validator {
+	String HLSText;
+
+	public Validator() {
+	}
+	
+	
+
+}

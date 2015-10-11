@@ -1,0 +1,22 @@
+package validators;
+
+import hlsfiles.HLSFile;
+
+public class FileTypeValidator extends Validator {
+
+	public FileTypeValidator(HLSFile file) {
+		File = file;
+	}
+
+	public Boolean IsValid() {
+		System.out.println(super.File.FileExtension);
+		Boolean isAcceptableFileExt = (File.FileExtension.equals("m3u8"));
+
+		System.out.println(isAcceptableFileExt);
+
+		if (!isAcceptableFileExt)
+			AddValidationError("File Extension is Incorrect for File: " + File.FileName, "File Type Validation");
+
+		return isAcceptableFileExt;
+	}
+}

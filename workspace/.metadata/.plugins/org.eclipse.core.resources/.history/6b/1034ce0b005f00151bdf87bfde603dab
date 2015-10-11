@@ -1,0 +1,26 @@
+package validators;
+
+import hlsfiles.HLSFileWDirectory;
+
+public class FileBeginWithValidator extends Validator {
+
+	public FileBeginWithValidator(HLSFileWDirectory file) {
+		File = file;
+	}
+
+	public void Validate() {
+
+		try {
+			if (!(File.HLSText.matches("#EXTM3U.*")))
+				AddErrorMessage();
+		} catch (Exception e) {
+			AddErrorMessage();
+		}
+	}
+
+	private void AddErrorMessage() {
+		AddValidationError("File does not begin with correct text (#EXTM3U) : " + File.FileBaseName,
+				"File Begins With #EXTM3U Validation");
+	}
+
+}

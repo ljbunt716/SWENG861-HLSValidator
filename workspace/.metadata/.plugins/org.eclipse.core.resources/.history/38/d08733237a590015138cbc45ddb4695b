@@ -1,0 +1,53 @@
+package hlsfiles;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class HLSFile {
+	public URL Url;
+	public StringBuilder HLSText;
+	public String FileName;
+	public String FileExtension;
+	public List<String> LowerLevelFiles;
+
+	public HLSFile() {
+		HLSText = new StringBuilder();
+		LowerLevelFiles = new ArrayList<String>();
+	}
+
+	public HLSFile(URL url) {
+		HLSText = new StringBuilder();
+		Url = url;
+		LowerLevelFiles = new ArrayList<String>();
+
+		Scanner scanner = null;
+
+		try {
+			// Get the text from the file with provided URL
+			scanner = new Scanner(Url.openStream());
+
+			// While there is something to get in file, append it to HLSText
+			while (scanner.hasNextLine()) {
+				String nextLine = scanner.nextLine();
+				HLSText.append(nextLine);
+				AddLowerLevelFiles(nextLine);
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (scanner != null)
+				scanner.close();
+		}
+	}
+
+	private void AddLowerLevelFiles(String nextLine) {
+		if (!nextLine.startsWith("#")&& nextLine.contains(".m3u8"))
+			LowerLevelFiles.add(nextLine);
+	}
+
+}
